@@ -21,6 +21,7 @@ $userName = htmlspecialchars($_SESSION['user_name']);
     <h1>Welcome to your Dashboard, <?= $userName ?>!</h1>
     <p>This is a protected area.</p>
     <p><a href="courses.php">View Courses</a></p>
+    <p><a href="tasks.php">View Tasks</a></p>
     <a href="logout.php">Logout</a>
 </body>
 </html>
