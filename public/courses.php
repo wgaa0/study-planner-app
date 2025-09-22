@@ -31,6 +31,7 @@ $courses = $stmt->fetchAll();
         <li>
           <strong><?= htmlspecialchars($course['title']) ?></strong><br>
           <?= nl2br(htmlspecialchars($course['description'])) ?><br>
+          <a href="resources.php?course_id=<?= $course['id'] ?>">Resources</a><br>
           <small>Created: <?= $course['created_at'] ?></small><br>
           <a href="course_edit.php?id=<?= $course['id'] ?>">Edit</a> | 
           <a href="course_process.php?action=delete&id=<?= $course['id'] ?>" onclick="return confirm('Delete this course?')">Delete</a>
