@@ -22,6 +22,7 @@ $userName = htmlspecialchars($_SESSION['user_name']);
     <p>This is a protected area.</p>
     <p><a href="courses.php">View Courses</a></p>
     <p><a href="tasks.php">View Tasks</a></p>
+    <p><a href="events_test.php">Test Events API</a></p>
     <a href="logout.php">Logout</a>
 </body>
 </html>
