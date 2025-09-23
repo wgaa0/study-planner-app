@@ -1,7 +1,5 @@
 <?php
 session_start();
-header('Content-Type: application/json');
-
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);
@@ -9,54 +7,71 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once __DIR__ . '/../../src/lib/DB.php';
-
 $pdo = DB::get();
+
 $userId = $_SESSION['user_id'];
 $method = $_SERVER['REQUEST_METHOD'];
 
+header('Content-Type: application/json');
+
 switch ($method) {
     case 'GET':
-        // Fetch all events for this user
-        $stmt = $pdo->prepare("SELECT * FROM events WHERE user_id = :uid ORDER BY start ASC");
+        $stmt = $pdo->prepare("SELECT id, title, start, end, notes FROM events WHERE user_id = :uid");
         $stmt->execute([':uid' => $userId]);
         echo json_encode($stmt->fetchAll());
         break;
 
     case 'POST':
-        $input = json_decode(file_get_contents('php://input'), true);
-        if (!$input || !isset($input['title'], $input['start'])) {
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (!$data || empty($data['title']) || empty($data['start'])) {
             http_response_code(400);
             echo json_encode(['error' => 'Missing required fields']);
             exit();
         }
 
-        $stmt = $pdo->prepare("INSERT INTO events (user_id, course_id, task_id, title, start, end, notes) 
-                               VALUES (:uid, :cid, :tid, :title, :start, :end, :notes)");
+        $stmt = $pdo->prepare("INSERT INTO events (user_id, title, start, end, notes) 
+                               VALUES (:uid, :title, :start, :end, :notes)");
         $stmt->execute([
             ':uid' => $userId,
-            ':cid' => $input['course_id'] ?? null,
-            ':tid' => $input['task_id'] ?? null,
-            ':title' => $input['title'],
-            ':start' => $input['start'],
-            ':end' => $input['end'] ?? null,
-            ':notes' => $input['notes'] ?? null,
+            ':title' => $data['title'],
+            ':start' => $data['start'],
+            ':end'   => $data['end'] ?? null,
+            ':notes' => $data['notes'] ?? null
         ]);
-        echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
+        echo json_encode(['success' => true]);
+        break;
+
+    case 'PUT':
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (!$data || empty($data['id'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing event ID']);
+            exit();
+        }
+
+        $stmt = $pdo->prepare("UPDATE events 
+                               SET title = :title, start = :start, end = :end, notes = :notes 
+                               WHERE id = :id AND user_id = :uid");
+        $stmt->execute([
+            ':title' => $data['title'] ?? '',
+            ':start' => $data['start'] ?? null,
+            ':end'   => $data['end'] ?? null,
+            ':notes' => $data['notes'] ?? null,
+            ':id'    => $data['id'],
+            ':uid'   => $userId
+        ]);
+        echo json_encode(['success' => true]);
         break;
 
     case 'DELETE':
-        parse_str($_SERVER['QUERY_STRING'], $query);
-        if (!isset($query['id'])) {
+        if (!isset($_GET['id'])) {
             http_response_code(400);
-            echo json_encode(['error' => 'Missing id']);
+            echo json_encode(['error' => 'Missing event ID']);
             exit();
         }
 
         $stmt = $pdo->prepare("DELETE FROM events WHERE id = :id AND user_id = :uid");
-        $stmt->execute([
-            ':id' => $query['id'],
-            ':uid' => $userId
-        ]);
+        $stmt->execute([':id' => $_GET['id'], ':uid' => $userId]);
         echo json_encode(['success' => true]);
         break;
 

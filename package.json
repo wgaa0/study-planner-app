@@ -1,0 +1,26 @@
+{
+  "name": "study-planner-app",
+  "version": "1.0.0",
+  "description": "A web app that lets students create courses/projects, tasks, deadlines, upload resources and view analytics.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wgaa0/study-planner-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wgaa0/study-planner-app/issues"
+  },
+  "homepage": "https://github.com/wgaa0/study-planner-app#readme",
+  "dependencies": {
+    "fullcalendar": "^6.1.19"
+  }
+}

@@ -23,6 +23,7 @@ $userName = htmlspecialchars($_SESSION['user_name']);
     <p><a href="courses.php">View Courses</a></p>
     <p><a href="tasks.php">View Tasks</a></p>
     <p><a href="events_test.php">Test Events API</a></p>
+    <p><a href="events.php">Events</a></p>
     <a href="logout.php">Logout</a>
 </body>
 </html>
