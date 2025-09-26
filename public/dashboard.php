@@ -26,5 +26,6 @@ $userName = htmlspecialchars($_SESSION['user_name']);
     <p><a href="events.php">Events</a></p>
     <a href="logout.php">Logout</a>
     <p><a href="analytics.php">View Analytics</a></p>
+    <p><a href="profile.php">Profile</a></p>
 </body>
 </html>
