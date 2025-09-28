@@ -10,7 +10,8 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Analytics</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <script src="../node_modules/chart.js/dist/chart.umd.js"></script>
     <style>
         #chart-container {
             max-width: 700px;
