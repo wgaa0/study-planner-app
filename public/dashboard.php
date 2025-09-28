@@ -1,31 +1,19 @@
 <?php
-// Start the session
 session_start();
 
-// Check if the user is logged in. If not, redirect to the login page.
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
-// Use htmlspecialchars to prevent XSS attacks when displaying user data
-$userName = htmlspecialchars($_SESSION['user_name']);
+$title = "Dashboard";
+
+ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Welcome to your Dashboard, <?= $userName ?>!</h1>
-    <p>This is a protected area.</p>
-    <p><a href="courses.php">View Courses</a></p>
-    <p><a href="tasks.php">View Tasks</a></p>
-    <p><a href="events_test.php">Test Events API</a></p>
-    <p><a href="events.php">Events</a></p>
-    <a href="logout.php">Logout</a>
-    <p><a href="analytics.php">View Analytics</a></p>
-    <p><a href="profile.php">Profile</a></p>
-</body>
-</html>
+<h1 class="text-2xl font-bold mb-4">Welcome, <?= htmlspecialchars($_SESSION['user_name']) ?>!</h1>
+<p class="mb-4">This is your protected dashboard area.</p>
+<p>Select a page from the sidebar to get started.</p>
+<?php
+$content = ob_get_clean();
+
+include __DIR__ . '/partials/layout.php';
