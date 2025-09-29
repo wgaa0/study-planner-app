@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
     <title>Events Calendar</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.css" rel="stylesheet"/> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js"></script> -->
-    <script src="../node_modules/fullcalendar/index.global.min.js"></script>
+    <script src="./assets/vendor/fullcalendar/index.global.min.js"></script>
 
     <style>
         #calendar {
