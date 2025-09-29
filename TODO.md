@@ -1,12 +1,12 @@
 # Todo & Notes
 
 ## Plans
-- [ ]Add SQLite compatibility
-- [ ]Add project feature to allow collaboration between users
+- [ ] Add SQLite compatibility
+- [ ] Add project feature to allow collaboration between users
 
 ## Pages to Style
 - [ ] Login & registration pages
-- [ ]User dashboard
+- [ ] User dashboard
 - [ ] Courses & course update pages
 - [ ] Tasks & task update pages
 - [ ] Events and view events pages
