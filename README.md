@@ -14,7 +14,7 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
 ---
 
 ## Installation & Setup (Windows)
-1. Clone the repository into XAMPP's 'htdocs' folder (typically `C:\xampp\htdocs` on Windows):
+1. Clone the repository into XAMPP's `htdocs` folder (typically `C:\xampp\htdocs` on Windows):
     ```cmd
     cd C:\xampp\htdocs
     git clone https://github.com/wgaa0/study-planner-app
@@ -45,13 +45,13 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
 
 6. Import the database:
     - open http://localhost/phpmyadmin
-    - create a database (name: study_manager)
+    - create a database (name: `study_manager`)
     - select the `study_manager` database
     - Go to the **Import** tab.
     - Choose the file located at `db\study_manager.sql`
     - Click **Go** to execute the script and create the tables.
 
-7. Open the app in your: http://localhost/study-planner-app/public
+7. Open the app in your browser: http://localhost/study-planner-app/public/login.php
 
 ---
 
