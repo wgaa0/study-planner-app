@@ -41,7 +41,7 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
    ```
 
 5. Start XAMPP (Apache + MySQL):
-    - Make sure both **Apache** and **MySQL** are running.
+    - Launch **XAMPP Control Panel** and make sure both **Apache** and **MySQL** are running.
 
 6. Import the database:
     - open http://localhost/phpmyadmin
