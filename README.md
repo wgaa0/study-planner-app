@@ -18,22 +18,27 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
     ```cmd
     cd C:\xampp\htdocs
     git clone https://github.com/wgaa0/study-planner-app
+    ```
 
 2. Move into the project folder:
     ```cmd
     cd study-planner-app
+    ```
 
 3. Install dependencies:
     ```cmd
     npm install
+    ```
 
 4. Compile TailwindCSS (for development):
     ```cmd
     npm run dev:css
+    ```
 
    For production:
    ```cmd
    npm run build:css
+   ```
 
 5. Start XAMPP (Apache + MySQL):
     - Make sure both **Apache** and **MySQL** are running.
