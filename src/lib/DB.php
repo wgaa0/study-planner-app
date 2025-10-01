@@ -12,9 +12,13 @@ class DB {
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
+            ];
 
-        self::$pdo = new PDO($c['dsn'], $c['user'], $c['pass'], $options);
+            self::$pdo = new PDO($c['dsn'], $c['user'] ?? null, $c['pass'] ?? null, $options);
+
+            if (strpos($c['dsn'], 'sqlite:') === 0) {
+                self::$pdo->exec('PRAGMA foreign_keys = ON;');
+            }
         }
         return self::$pdo;
     }
