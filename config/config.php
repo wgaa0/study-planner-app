@@ -1,6 +1,6 @@
 <?php
 
-$driver = 'mysql'; // change this to 'mysql' if you want MySQL
+$driver = 'sqlite'; // change this to 'mysql' if you want MySQL
 
 return [
     'db' => [
