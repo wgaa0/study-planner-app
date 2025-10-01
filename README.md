@@ -4,16 +4,17 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
 ---
 
 ## Requirements
-- PHP ≥ 8.2
+- PHP ≥ 8.2 (with **MySQL** or **SQLite** support)
 - Node.js ≥ 18
 - npm ≥ 9
-- XAMPP (Apache + MySQL) ≥ 8.2
+- **Database**: MySQL (via XAMPP) **OR** SQLite (simpler setup)
 - TailwindCSS (bundled via npm)
 - FullCalendar and Chart.js assets are included in public/assets/vendor for easier setup. No extra install needed.
 
 ---
 
 ## Installation & Setup (Windows)
+## Option 1: MySQL (XAMPP) - Original Setup
 1. Clone the repository into XAMPP's `htdocs` folder (typically `C:\xampp\htdocs` on Windows):
     ```cmd
     cd C:\xampp\htdocs
@@ -52,6 +53,47 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
     - Click **Go** to execute the script and create the tables.
 
 7. Open the app in your browser: http://localhost/study-planner-app/public/login.php
+
+---
+## Option 2: SQLite (Simplified Setup)
+1. Clone the repository:
+    ```cmd
+    git clone https://github.com/wgaa0/study-planner-app
+    cd study-planner-app
+    ```
+
+2. Install dependencies:
+    ```cmd
+    npm install
+    npm run build:css
+    ```
+
+3. Enable SQLite in PHP:
+    - Find you `php.ini` file:
+        ```cmd
+        php --ini
+        ```
+    - Open it and uncomment these lines (remove the semicolon):
+        ```
+        extension=sqlite3
+        extension=pdo_sqlite
+        ```
+    - Restart your web server if needed
+
+4. Configure the app for SQLite:
+    - Edit `config/config.php` and change line 3 to: `$driver = 'sqlite';`
+
+5. Set up the database:
+    ```cmd
+    sqlite3 db/study_manager.sqlite ".read db/study_manager.sqlite.sql
+    ```
+
+6. Start the development server:
+    ```cmd
+    php -S localhost:8000 -t public
+    ```
+
+7. Open the app in your browser: http://localhost:8000/login.php
 
 ---
 
