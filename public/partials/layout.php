@@ -34,7 +34,7 @@ function renderNavLink($text, $href, $currentTitle) {
 <body class="bg-gray-100 flex">
 
     <!-- Sidebar -->
-    <aside class="w-64 h-screen bg-gray-800 text-white flex flex-col">
+    <aside class="w-64 h-screen bg-gray-800 text-white flex flex-col min-h-screen">
         <div class="p-4 font-bold text-xl border-b border-gray-700">
             Study Manager
         </div>
@@ -42,9 +42,9 @@ function renderNavLink($text, $href, $currentTitle) {
             <?php renderNavLink('Dashboard', 'dashboard.php', $title ?? ''); ?>
             <?php renderNavLink('Courses', 'courses.php', $title ?? ''); ?>
             <?php renderNavLink('Tasks', 'tasks.php', $title ?? ''); ?>
-            <a href="events.php" class="block px-2 py-1 rounded hover:bg-gray-700">Events</a>
-            <a href="analytics.php" class="block px-2 py-1 rounded hover:bg-gray-700">Analytics</a>
-            <a href="profile.php" class="block px-2 py-1 rounded hover:bg-gray-700">Profile</a>
+            <?php renderNavLink('Events', 'events.php', $title ?? ''); ?>
+            <?php renderNavLink('Analytics', 'analytics.php', $title ?? ''); ?>
+            <?php renderNavLink('Profile', 'profile.php', $title ?? ''); ?>
         </nav>
         <div class="p-4 border-t border-gray-700">
             <span class="block mb-2">Hello, <?= $userName ?></span>

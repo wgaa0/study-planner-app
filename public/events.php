@@ -4,108 +4,185 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+$pageTitle = "Events Calendar";
+ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Events Calendar</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.css" rel="stylesheet"/> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js"></script> -->
-    <script src="./assets/vendor/fullcalendar/index.global.min.js"></script>
 
-    <style>
-        #calendar {
-            max-width: 900px;
-            margin: 40px auto;
-        }
-    </style>
-</head>
-<body>
-    <h1 style="text-align:center;">My Events</h1>
-    <div id="calendar"></div>
+<div class="p-6">
+    <h1 class="text-2xl font-bold mb-6 text-center">My Events</h1>
+    <div id="calendar" class="bg-white rounded-2xl shadow p-4 h-[80vh]"></div>
+</div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar');
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            events: async (info, successCallback, failureCallback) => {
-                try {
-                    const res = await fetch('api/events.php');
-                    const data = await res.json();
-                    successCallback(data.map(ev => ({
-                        id: ev.id,
-                        title: ev.title,
-                        start: ev.start,
-                        end: ev.end,
-                        description: ev.notes || ''
-                    })));
-                } catch (err) {
-                    failureCallback(err);
-                }
-            },
-            selectable: true,
-            select: async (info) => {
-                const title = prompt('Event Title:');
-                if (!title) return;
+<!-- Create Event Modal -->
+<div id="createModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
+        <h2 class="text-xl font-semibold mb-4">Create Event</h2>
+        <form id="createForm" class="space-y-4">
+            <div>
+                <label class="block mb-1 text-sm font-medium">Title</label>
+                <input type="text" name="title" required class="w-full border rounded p-2" />
+            </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium">Description</label>
+                <textarea name="notes" class="w-full border rounded p-2"></textarea>
+            </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium">Start</label>
+                <input type="datetime-local" name="start" required class="w-full border rounded p-2" />
+            </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium">End</label>
+                <input type="datetime-local" name="end" class="w-full border rounded p-2" />
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button type="button" onclick="closeModal('createModal')" class="px-4 py-2 rounded bg-gray-200">Cancel</button>
+                <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-                const description = prompt('Event Description (optional):', '');
-                const start = prompt('Start (YYYY-MM-DD HH:MM)', info.startStr.slice(0,16));
-                const end = prompt('End (YYYY-MM-DD HH:MM)', info.endStr ? info.endStr.slice(0,16) : '');
+<!-- Edit Event Modal -->
+<div id="editModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
+        <h2 class="text-xl font-semibold mb-4">Edit Event</h2>
+        <form id="editForm" class="space-y-4">
+            <input type="hidden" name="id" />
+            <div>
+                <label class="block mb-1 text-sm font-medium">Title</label>
+                <input type="text" name="title" required class="w-full border rounded p-2" />
+            </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium">Description</label>
+                <textarea name="notes" class="w-full border rounded p-2"></textarea>
+            </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium">Start</label>
+                <input type="datetime-local" name="start" required class="w-full border rounded p-2" />
+            </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium">End</label>
+                <input type="datetime-local" name="end" class="w-full border rounded p-2" />
+            </div>
+            <div class="flex justify-between">
+                <button type="button" id="deleteBtn" class="px-4 py-2 rounded bg-red-600 text-white">Delete</button>
+                <div class="space-x-2">
+                    <button type="button" onclick="closeModal('editModal')" class="px-4 py-2 rounded bg-gray-200">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
-                const newEvent = {
-                    title: title,
-                    notes: description,
-                    start: start,
-                    end: end
-                };
+<script src="./assets/vendor/fullcalendar/index.global.min.js"></script>
+<script>
+function openModal(id) {
+    document.getElementById(id).classList.remove('hidden');
+}
+function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+}
 
-                const res = await fetch('api/events.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(newEvent)
-                });
-                const result = await res.json();
-                if (result.success) {
-                    calendar.refetchEvents();
-                } else {
-                    alert('Error creating event');
-                }
-            },
-            eventClick: async (info) => {
-                const action = prompt(
-                    `Edit or Delete "${info.event.title}"?\nType 'edit' or 'delete':`
-                );
-                if (action === 'delete') {
-                    await fetch('api/events.php?id=' + info.event.id, { method: 'DELETE' });
-                    calendar.refetchEvents();
-                } else if (action === 'edit') {
-                    const newTitle = prompt('New Title:', info.event.title) || info.event.title;
-                    const newDescription = prompt('New Description:', info.event.extendedProps.description || '');
-                    const newStart = prompt('New Start (YYYY-MM-DD HH:MM):', info.event.startStr.slice(0,16));
-                    const newEnd = prompt('New End (YYYY-MM-DD HH:MM):', info.event.endStr ? info.event.endStr.slice(0,16) : '');
+function toDateTimeLocal(date) {
+    if (!date) return '';
+    const pad = (n) => n.toString().padStart(2, '0');
+    return (
+        date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes())
+    );
+}
 
-                    const updateEvent = {
-                        id: info.event.id,
-                        title: newTitle,
-                        notes: newDescription,
-                        start: newStart,
-                        end: newEnd
-                    };
-
-                    await fetch('api/events.php', {
-                        method: 'PUT',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(updateEvent)
-                    });
-                    calendar.refetchEvents();
-                }
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+        events: async (info, successCallback, failureCallback) => {
+            try {
+                const res = await fetch('api/events.php');
+                const data = await res.json();
+                successCallback(data.map(ev => ({
+                    id: ev.id,
+                    title: ev.title,
+                    start: ev.start,
+                    end: ev.end,
+                    description: ev.notes || ''
+                })));
+            } catch (err) {
+                failureCallback(err);
             }
-        });
-
-        calendar.render();
+        },
+        select: (info) => {
+            const form = document.getElementById('createForm');
+            form.reset();
+            form.start.value = toDateTimeLocal(info.start);
+            if (info.endStr) form.end.value = toDateTimeLocal(info.end);
+            openModal('createModal');
+        },
+        eventClick: (info) => {
+            const form = document.getElementById('editForm');
+            form.id.value = info.event.id;
+            form.title.value = info.event.title;
+            form.notes.value = info.event.extendedProps.description || '';
+            form.start.value = info.event.startStr.slice(0,16);
+            if (info.event.endStr) form.end.value = info.event.endStr.slice(0,16);
+            openModal('editModal');
+        }
     });
-    </script>
-</body>
-</html>
+
+    calendar.render();
+
+    // Create Event
+    document.getElementById('createForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(e.target).entries());
+        const res = await fetch('api/events.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+        const result = await res.json();
+        if (result.success) {
+            closeModal('createModal');
+            calendar.refetchEvents();
+        } else {
+            alert('Error creating event');
+        }
+    };
+
+    // Edit Event
+    document.getElementById('editForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(e.target).entries());
+        const res = await fetch('api/events.php', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+        const result = await res.json();
+        if (result.success) {
+            closeModal('editModal');
+            calendar.refetchEvents();
+        } else {
+            alert('Error updating event');
+        }
+    };
+
+    // Delete Event
+    document.getElementById('deleteBtn').onclick = async () => {
+        const id = document.getElementById('editForm').id.value;
+        await fetch('api/events.php?id=' + id, { method: 'DELETE' });
+        closeModal('editModal');
+        calendar.refetchEvents();
+    };
+});
+</script>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '../partials/layout.php';
+?>
