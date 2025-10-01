@@ -69,7 +69,7 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
     ```
 
 3. Enable SQLite in PHP:
-    - Find you `php.ini` file:
+    - Find your `php.ini` file:
         ```cmd
         php --ini
         ```
@@ -81,11 +81,11 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
     - Restart your web server if needed
 
 4. Configure the app for SQLite:
-    - Edit `config/config.php` and change line 3 to: `$driver = 'sqlite';`
+    - Edit `config\config.php` and change line 3 to: `$driver = 'sqlite';`
 
 5. Set up the database:
     ```cmd
-    sqlite3 db/study_manager.sqlite ".read db/study_manager.sqlite.sql
+    sqlite3 db\study_manager.sqlite ".read db/study_manager.sqlite.sql"
     ```
 
 6. Start the development server:
@@ -112,7 +112,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ---
 
 ## Roadmap
-- [ ] Add SQLite support for easy setup
+- [x] Add SQLite support for easy setup
 - [ ] Style events and analytics pages
 - [ ] Input validation for forms
 - [ ] Collaboration features (projects)

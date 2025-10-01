@@ -1,7 +1,7 @@
 # Todo & Notes
 
 ## Plans
-- [ ] Add SQLite compatibility
+- [x] Add SQLite compatibility
 - [ ] Add project feature to allow collaboration between users
 
 ## Pages to Style
