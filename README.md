@@ -113,6 +113,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Roadmap
 - [x] Add SQLite support for easy setup
-- [ ] Style events and analytics pages
+- [x] Style events and analytics pages
 - [ ] Input validation for forms
 - [ ] Collaboration features (projects)
