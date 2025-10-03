@@ -16,20 +16,20 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
 ## Prerequisites & Common Pitfalls
 Before you begin, make sure your PHP environment is configured correctly.
 
-1. Is PHP In Your System's PATH?
+1. **Is PHP In Your System's PATH?**
     - This guide assumes the php command is globally available. Open a command prompt and verify this:
-    ```cmd
-    php -v
-    ```
+        ```cmd
+        php -v
+        ```
     - If you see a PHP version number, you are all set. If you get an error like `'php' is not recognized...`, you must add the location of your PHP installation (e.g., `c:\php`) to the Windows PATH environment variable.
 
-2. Do You Have a `php.ini` File?
+2. **Do You Have a `php.ini` File?**
     - By default, a manual PHP install does not create a `php.ini` file. PHP looks for a file named exactly php.ini in its root folder for configuration settings.
     - Run `php --ini`. If it says `Loaded Configuration File: (none)`, you need to create one.
     - In your PHP folder (e.g., `C:\php`), find the file named `php.ini-development`.
     - Copy and rename this file to `php.ini`. This activates a development-friendly configuration.
 
-3. Are PHP Extensions Enabled?
+3. **Are PHP Extensions Enabled?**
     - For this app's MySQL and SQLite setup to work, specific extensions must be enabled inside your php.ini file.
     - Open your `php.ini`
     - Uncomment the following lines (remove the semicolon):
