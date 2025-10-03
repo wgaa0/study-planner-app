@@ -162,11 +162,6 @@ Before you begin, make sure your PHP environment is configured correctly.
 
 ---
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
----
-
 ## Roadmap
 - [x] Add SQLite support for easy setup
 - [x] Style events and analytics pages
