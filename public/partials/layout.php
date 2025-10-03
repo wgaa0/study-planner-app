@@ -4,13 +4,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
-// Escape user name
 $userName = htmlspecialchars($_SESSION['user_name']);
 
 function renderNavLink($text, $href, $currentTitle) {

@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
 
-    // Update session name immediately
     $_SESSION['user_name'] = $name;
 
     header("Location: profile.php?status=success");

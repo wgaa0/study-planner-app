@@ -13,7 +13,6 @@ ob_start();
     <div id="calendar" class="bg-white rounded-2xl shadow p-4 h-[80vh]"></div>
 </div>
 
-<!-- Create Event Modal -->
 <div id="createModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
         <h2 class="text-xl font-semibold mb-4">Create Event</h2>
@@ -42,7 +41,6 @@ ob_start();
     </div>
 </div>
 
-<!-- Edit Event Modal -->
 <div id="editModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
         <h2 class="text-xl font-semibold mb-4">Edit Event</h2>
@@ -136,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calendar.render();
 
-    // Create Event
     document.getElementById('createForm').onsubmit = async (e) => {
         e.preventDefault();
         const formData = Object.fromEntries(new FormData(e.target).entries());
@@ -154,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Edit Event
     document.getElementById('editForm').onsubmit = async (e) => {
         e.preventDefault();
         const formData = Object.fromEntries(new FormData(e.target).entries());
@@ -172,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Delete Event
     document.getElementById('deleteBtn').onclick = async () => {
         const id = document.getElementById('editForm').id.value;
         await fetch('api/events.php?id=' + id, { method: 'DELETE' });

@@ -12,7 +12,6 @@ if (!$course_id) {
     die("No course selected.");
 }
 
-// Fetch course
 $stmt = $pdo->prepare("SELECT title FROM courses WHERE id = :cid AND user_id = :uid");
 $stmt->execute([':cid' => $course_id, ':uid' => $_SESSION['user_id']]);
 $course = $stmt->fetch();
@@ -20,7 +19,6 @@ if (!$course) {
     die("Course not found.");
 }
 
-// Fetch resources
 $stmt = $pdo->prepare("SELECT * FROM resources WHERE course_id = :cid AND user_id = :uid ORDER BY uploaded_at DESC");
 $stmt->execute([':cid' => $course_id, ':uid' => $_SESSION['user_id']]);
 $resources = $stmt->fetchAll();

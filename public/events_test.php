@@ -31,7 +31,6 @@ if (!isset($_SESSION['user_id'])) {
     const form = document.getElementById('eventForm');
     const eventsList = document.getElementById('eventsList');
 
-    // Create event
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = {
@@ -50,7 +49,6 @@ if (!isset($_SESSION['user_id'])) {
         alert('Created: ' + JSON.stringify(result));
     });
 
-    // Load events
     document.getElementById('loadEvents').addEventListener('click', async () => {
         const res = await fetch('api/events.php');
         const events = await res.json();

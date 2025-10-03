@@ -16,7 +16,6 @@ if (!$id || !$course_id) {
 
 $pdo = DB::get();
 
-// Fetch file info to delete from disk
 $stmt = $pdo->prepare("SELECT file_path FROM resources WHERE id = :id AND user_id = :uid AND course_id = :cid");
 $stmt->execute([
     ':id' => $id,
@@ -29,13 +28,11 @@ if (!$res) {
     die("Resource not found.");
 }
 
-// Delete file from disk
 $filePath = __DIR__ . '/../uploads/' . $res['file_path'];
 if (file_exists($filePath)) {
     unlink($filePath);
 }
 
-// Delete row from DB
 $stmt = $pdo->prepare("DELETE FROM resources WHERE id = :id AND user_id = :uid AND course_id = :cid");
 $stmt->execute([
     ':id' => $id,
@@ -43,6 +40,5 @@ $stmt->execute([
     ':cid' => $course_id
 ]);
 
-// Redirect back
 header("Location: resources.php?course_id=" . $course_id);
 exit();

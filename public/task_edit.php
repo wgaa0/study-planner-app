@@ -15,7 +15,6 @@ if (!$id) {
 
 $pdo = DB::get();
 
-// Fetch task
 $sql = "SELECT t.id, t.title, t.details, t.status, t.due_date, c.id AS course_id
         FROM tasks t
         JOIN courses c ON t.course_id = c.id
@@ -28,7 +27,6 @@ if (!$task) {
     die("Task not found.");
 }
 
-// Fetch all courses for dropdown
 $stmt = $pdo->prepare("SELECT id, title FROM courses WHERE user_id = :uid");
 $stmt->execute([':uid' => $_SESSION['user_id']]);
 $courses = $stmt->fetchAll();
