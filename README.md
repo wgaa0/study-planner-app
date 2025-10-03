@@ -18,6 +18,7 @@ Before you begin, make sure your PHP environment is configured correctly.
 
 1. **Is PHP In Your System's PATH?**
     - This guide assumes the php command is globally available. Open a command prompt and verify this:
+
         ```cmd
         php -v
         ```
@@ -34,6 +35,7 @@ Before you begin, make sure your PHP environment is configured correctly.
     - Open your `php.ini`
     - Uncomment the following lines (remove the semicolon):
         For MySQL (XAMPP Setup):
+
         ```ini
         ; Make sure the extension directory is enabled
         extension_dir = "ext"
@@ -44,6 +46,7 @@ Before you begin, make sure your PHP environment is configured correctly.
         ```
 
         For SQLite (SQLite Setup):
+
         ```ini
         ; Make sure the extension directory is enabled
         extension_dir = "ext"
@@ -58,27 +61,32 @@ Before you begin, make sure your PHP environment is configured correctly.
 ## Installation & Setup (Windows)
 ## Option 1: MySQL (XAMPP) - Original Setup
 1. Clone the repository into XAMPP's `htdocs` folder (typically `C:\xampp\htdocs` on Windows):
+
     ```cmd
     cd C:\xampp\htdocs
     git clone https://github.com/wgaa0/study-planner-app
     ```
 
 2. Move into the project folder:
+
     ```cmd
     cd study-planner-app
     ```
 
 3. Install dependencies:
+
     ```cmd
     npm install
     ```
 
 4. Compile TailwindCSS (for development):
+
     ```cmd
     npm run dev:css
     ```
 
    For production:
+
    ```cmd
    npm run build:css
    ```
@@ -100,12 +108,14 @@ Before you begin, make sure your PHP environment is configured correctly.
 
 ## Option 2: SQLite (Simplified Setup)
 1. Clone the repository:
+
     ```cmd
     git clone https://github.com/wgaa0/study-planner-app
     cd study-planner-app
     ```
 
 2. Install dependencies:
+
     ```cmd
     npm install
     npm run build:css
@@ -114,6 +124,7 @@ Before you begin, make sure your PHP environment is configured correctly.
 3. Configure PHP for SQLite:
    - **First, locate your `php.ini` file.** Run `php --ini`. If it says `(none)`, follow the instructions in the "Common Pitfalls" section above to create it from `php.ini-development`.
    - **Open the `php.ini` file** and ensure the following three lines are present and have the leading semicolon (`;`) removed:
+
      ```ini
      ; Make sure the extension directory is enabled
      extension_dir = "ext"
@@ -127,11 +138,13 @@ Before you begin, make sure your PHP environment is configured correctly.
     - Edit `config\config.php` and change line 3 to: `$driver = 'sqlite';`
 
 5. Set up the database:
+
     ```cmd
     sqlite3 db\study_manager.sqlite ".read db/study_manager.sqlite.sql"
     ```
 
 6. Start the development server:
+
     ```cmd
     php -S localhost:8000 -t public
     ```
