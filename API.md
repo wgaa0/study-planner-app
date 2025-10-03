@@ -141,7 +141,7 @@ All endpoints require the user to be **logged in** (session-based authentication
 
 - Error (501 Server Error:)
     ```json
-    { "error": "SQLSTATE[...] }
+    { "error": "SQLSTATE[...]" }
 
 ---
 

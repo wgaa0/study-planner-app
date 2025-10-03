@@ -3,6 +3,14 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
 
 ---
 
+## Documentation
+[Database Design Rationale](docs/DB_RATIONALE.md)  
+[Entity Relationship Diagram](docs/database_erd.png)  
+[API Documentation](API.md)  
+[Project TODOs](TODO.md)
+
+---
+
 ## Requirements
 - PHP ≥ 8.2 (with **MySQL** or **SQLite** support)
 - Node.js ≥ 18
