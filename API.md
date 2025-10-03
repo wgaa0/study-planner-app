@@ -20,11 +20,11 @@ All endpoints require the user to be **logged in** (session-based authentication
 
 ## Events API
 
-1. **Get all events**  
-**Endpoint:**  
-    `GET /api/events.php`  
+### 1. Get all events 
+- Endpoint:  
+`GET /api/events.php`  
 
-**Response (200 OK):**
+- Response (200 OK):
 
     ```json
     [
@@ -36,7 +36,7 @@ All endpoints require the user to be **logged in** (session-based authentication
             "notes": "Bring calculator"
         },
         {
-            "id: 2,
+            "id": 2,
             "title": "Group Study",
             "start": "2025-10-03 15:00:00",
             "end": "2025-10-03 17:00:00",
@@ -44,38 +44,38 @@ All endpoints require the user to be **logged in** (session-based authentication
         }
     ]
     ```  
-2. **Create a new event**  
-**Endpoint:**  
-    `POST /api/events.php`  
+### 2. Create a new event  
+- Endpoint:  
+`POST /api/events.php`  
 
-**Request body (JSON):**
+- Request body (JSON):
 
     ```json
     {
         "title": "Project Meeting",
         "start": "2025-10-10 14:00:00",
-        "end": "2025-10-10 15:00:00:,
+        "end": "2025-10-10 15:00:00",
         "notes": "Discuss presentation"
     }
     ```  
 
-**Response (200 OK):**
+- Response (200 OK):
 
     ```json
     { "success": true }
     ```  
 
-**Error (400 Bad Request):**
+- Error (400 Bad Request):
 
     ```json
     { "error": "Missing required fields" }
     ```  
 
-3. Update an event:  
-**Endpoint:**  
-    `PUT /api/events.php`  
+### 3. Update an event:  
+- Endpoint:  
+`PUT /api/events.php`  
 
-**Request body (JSON):**
+- Request body (JSON):
 
     ```json
     {
@@ -87,28 +87,28 @@ All endpoints require the user to be **logged in** (session-based authentication
     }
     ```  
 
-**Response (200 OK):**
+- Response (200 OK):
 
     ```json
     { "success": true }
     ```
 
-**Error (400 Bad Request):**
+- Error (400 Bad Request):
 
     ```json
     { "error": "Missing event ID" }
     ```  
-4. Delete an event:  
-**Endpoint:**  
-    `DELETE /api/events.php?id=1`  
+### 4. Delete an event:  
+- Endpoint:  
+`DELETE /api/events.php?id=1`  
 
-**Response (200 OK):**
+- Response (200 OK):
 
     ```json
     { "success": true }
     ```  
 
-**Error (400 Bad Request):**
+- Error (400 Bad Request):
 
     ```json
         { "error": "Missing event ID" }
@@ -117,11 +117,11 @@ All endpoints require the user to be **logged in** (session-based authentication
 ---
 
 ## Tasks Summary API  
-1. **Get completed tasks by week**  
-**Endpoint:**  
-    `GET /api/tasks_summary.php`  
+### 1. Get completed tasks by week
+- Endpoint:  
+`GET /api/tasks_summary.php`  
 
-**Response (200 OK):**
+- Response (200 OK):
 
     ```json
     [
@@ -134,7 +134,14 @@ All endpoints require the user to be **logged in** (session-based authentication
             "completed_count": 5
         }
     ]
-    ```
+    ```  
+    Where:
+    - `week` = `YEARWEEK(updated_at, 1)` (e.g., `202540` = 40th week of 2025)
+    - `completed_count` = tasks marked as `done` that week.
+
+- Error (501 Server Error:)
+    ```json
+    { "error": "SQLSTATE[...] }
 
 ---
 
