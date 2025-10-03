@@ -13,6 +13,48 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
 
 ---
 
+## Prerequisites & Common Pitfalls
+Before you begin, make sure your PHP environment is configured correctly.
+
+1. is PHP in your System's PATH?
+This guide assumes the php command is globally available. Open a command prompt and verify this:
+    ```cmd
+    php -v
+    ```
+If you see a PHP version number, you are all set. If you get an error like `'php' is not recognized...`, you must add the location of your PHP installation (e.g., `c:\php`) to the Windows PATH environment variable.
+
+2. Do You Have a `php.ini` File?
+By default, a manual PHP install does not create a `php.ini` file. PHP looks for a file named exactly php.ini in its root folder for configuration settings.
+- Run `php --ini`. If it says `Loaded Configuration File: (none)`, you need to create one.
+- In your PHP folder (e.g., `C:\php`), find the file named `php.ini-development`.
+- Copy and rename this file to `php.ini`. This activates a development-friendly configuration.
+
+3. Are PHP Extensions Enabled?
+For this app's MySQL and SQLite setup to work, specific extensions must be enabled inside your php.ini file.
+- Open your `php.ini`
+- Uncomment the following lines (remove the semicolon):
+    For MySQL (XAMPP Setup):
+    ```ini
+     ; Make sure the extension directory is enabled
+     extension_dir = "ext"
+
+     ; Enable the MySQL extensions
+     extension=pdo_mysql
+     extension=mysqli
+     ```
+
+     For SQLite (SQLite Setup):
+     ```ini
+     ; Make sure the extension directory is enabled
+     extension_dir = "ext"
+
+     ; Enable the SQLite extensions
+     extension=pdo_sqlite
+     extension=sqlite3
+     ```
+
+---
+
 ## Installation & Setup (Windows)
 ## Option 1: MySQL (XAMPP) - Original Setup
 1. Clone the repository into XAMPP's `htdocs` folder (typically `C:\xampp\htdocs` on Windows):
@@ -68,17 +110,17 @@ A web app that lets students create courses/projects, tasks, deadlines, upload r
     npm run build:css
     ```
 
-3. Enable SQLite in PHP:
-    - Find your `php.ini` file:
-        ```cmd
-        php --ini
-        ```
-    - Open it and uncomment these lines (remove the semicolon):
-        ```
-        extension=sqlite3
-        extension=pdo_sqlite
-        ```
-    - Restart your web server if needed
+3. Configure PHP for SQLite:
+   - **First, locate your `php.ini` file.** Run `php --ini`. If it says `(none)`, follow the instructions in the "Common Pitfalls" section above to create it from `php.ini-development`.
+   - **Open the `php.ini` file** and ensure the following three lines are present and have the leading semicolon (`;`) removed:
+     ```ini
+     ; Make sure the extension directory is enabled
+     extension_dir = "ext"
+
+     ; Enable the SQLite extensions
+     extension=pdo_sqlite
+     extension=sqlite3
+     ```
 
 4. Configure the app for SQLite:
     - Edit `config\config.php` and change line 3 to: `$driver = 'sqlite';`
